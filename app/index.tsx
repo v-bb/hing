@@ -1,9 +1,18 @@
 import {type ReactElement} from 'react';
+import {
+  FlatList,
+  Image,
+  ScrollView,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import styled, {css} from '@emotion/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {Button, SwitchToggle, useDooboo} from 'dooboo-ui';
 import {Stack, useRouter} from 'expo-router';
 
+import {IC_DOG, IC_MASK} from '../src/icons';
 import {t} from '../src/STRINGS';
 import {AsyncStorageKey} from '../src/utils/constants';
 
@@ -12,8 +21,6 @@ const Container = styled.View`
 
   flex: 1;
   align-self: stretch;
-  justify-content: center;
-  align-items: center;
 `;
 
 const Content = styled.View`
@@ -34,32 +41,74 @@ export default function Index(): ReactElement {
           title: t('HOME'),
         }}
       />
-      <Content>
-        <SwitchToggle
-          isOn={themeType === 'dark'}
-          onPress={() => {
-            const nextTheme = themeType === 'dark' ? 'light' : 'dark';
-            AsyncStorage.setItem(
-              AsyncStorageKey.DarkMode,
-              themeType === 'dark' ? 'false' : 'true',
-            );
-            changeThemeType(nextTheme);
-          }}
-        />
-        <Button
+      <ScrollView>
+        <ScrollView horizontal={true}>
+          <View
+            style={css`
+              background-color: gray;
+
+              align-items: center;
+              flex-direction: row;
+              gap: 8px;
+              padding: 16px;
+            `}
+          >
+            <TouchableOpacity
+              onPress={() => {
+                console.log('Clicked!');
+                push('/details');
+              }}
+            >
+              <Image
+                source={IC_DOG}
+                style={{
+                  width: 80,
+                  height: 80,
+                  borderRadius: 16,
+                }}
+              />
+            </TouchableOpacity>
+            <Image source={IC_MASK} />
+            <Image source={IC_MASK} />
+            <Image source={IC_MASK} />
+            <Image source={IC_MASK} />
+          </View>
+        </ScrollView>
+        <View
           style={css`
-            margin-top: 28px;
-            margin-bottom: 40px;
+            background-color: blue;
+            flex: 1;
+
+            gap: 16px;
+            padding: 16px;
           `}
-          styles={{
-            text: css`
-              font-family: Pretendard-Bold;
-            `,
-          }}
-          text={t('SEE_DETAILS')}
-          onPress={() => push('/details')}
-        />
-      </Content>
+        >
+          <Image
+            source={IC_DOG}
+            style={{
+              width: 380,
+              height: 240,
+              borderRadius: 16,
+            }}
+          />
+          <Image
+            source={IC_DOG}
+            style={{
+              width: 380,
+              height: 240,
+              borderRadius: 16,
+            }}
+          />
+          <Image
+            source={IC_DOG}
+            style={{
+              width: 380,
+              height: 240,
+              borderRadius: 16,
+            }}
+          />
+        </View>
+      </ScrollView>
     </Container>
   );
 }
